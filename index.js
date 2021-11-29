@@ -1,43 +1,54 @@
-const colors = require('colors')
+// date fomat: "november 29 2021 16:33:45"
+var startDates = process.argv.slice(2).map((e) => {
+    return new Date(e).getTime();
+});
 
-const primeArr = []
+const EventEmitter = require("events");
+const emitter = new EventEmitter();
 
-if (isNaN(process.argv[2]) || isNaN(process.argv[3])) {
-    console.log(colors.red(`Error! It's not a number!`))
-} else {
-    console.log(colors.blue(`Range of numbers to sample ${process.argv[2]} - ${process.argv[3]}`))
-}
+function countdown(startDate, i) {
+    let now = new Date().getTime();
+    let end = startDate - now;
+    let days = Math.floor(end / (1000 * 60 * 60 * 24));
+    let hours = Math.floor((end % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    let minutes = Math.floor((end % (1000 * 60 * 60)) / (1000 * 60));
+    let seconds = Math.floor((end % (1000 * 60)) / 1000);
 
-for (let i = process.argv[2]; i <= process.argv[3]; i++) {
-    let flag = 0
-
-    for (let j = 2; j < i; j++) {
-        if (i % j == 0) {
-            flag = 1
-            break
-        }
+    if (end < 0) {
+        //   clearInterval(tik);
+        console.log("Timer " + (i + 1) + ": Время вышло");
+    } else {
+        console.log(
+            "Timer " +
+            (i + 1) +
+            ": " +
+            days +
+            "д " +
+            hours +
+            "ч " +
+            minutes +
+            "м " +
+            seconds +
+            "с "
+        );
     }
-
-    if (i > 1 && flag == 0) {
-        primeArr.push(i)
-    }
 }
 
+emitter.on("test", (startDates) =>
+    startDates.forEach((element, i) => countdown(element, i))
+);
 
-if (!primeArr.length) {
-    console.log(colors.red('There are no primes in the specified range.'))
-} else {
-    primeArr.forEach(item => {
-        switch (primeArr.indexOf(item) % 3) {
-            case 0:
-                console.log(colors.green(item))
-                break
-            case 1:
-                console.log(colors.yellow(item))
-                break
-            case 2:
-                console.log(colors.red(item))
-                break
+var a = setInterval(() => {
+    const dateObj = new Date();
+    var timers = startDates.length;
+    var end = startDates.length;
+    emitter.emit("test", startDates);
+    startDates.forEach((element) => {
+        if (element >= dateObj.getTime()) {
+            timers = timers - 1;
         }
-    })
-}
+    });
+    if (timers == end) {
+        clearInterval(a);
+    }
+}, 1000);
