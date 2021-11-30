@@ -1,16 +1,17 @@
 {
-  "name": "node.js_gb",
-  "version": "0.0.1",
-  "description": "This is my HomeWorks for GeekBrains",
+  "name": "lesson6",
+  "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "Ilya Aleksin",
+  "keywords": [],
+  "author": "",
   "license": "ISC",
+  "description": "",
   "dependencies": {
-    "colors": "^1.4.0",
-    "inquirer": "^8.2.0"
+    "node-static": "^0.7.11",
+    "nodemon": "^2.0.13",
+    "socket.io": "^4.2.0"
   }
 }
