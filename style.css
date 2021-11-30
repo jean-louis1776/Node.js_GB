@@ -1,0 +1,14 @@
+ul {
+  background: hsl(123, 60%, 78%);
+  padding: 20px;
+  font-size: 1.5rem;
+  list-style: square outside;
+}
+li {
+  line-height: 1.5;
+}
+a {
+  outline: none;
+  text-decoration: none;
+  padding: 2px 1px 0;
+}
